@@ -14,12 +14,15 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS restore
 WORKDIR /src
 COPY ./*.sln ./
 COPY */*.csproj ./
+COPY ./.config/dotnet-tools.json ./.config/
 # Take into account using the same name for the folder and the .csproj and only one folder level
 RUN for file in $(ls *.csproj); do mkdir -p ${file%.*}/ && mv $file ${file%.*}/; done
+RUN dotnet tool restore
 RUN dotnet restore
 
 FROM restore AS build
 COPY . .
+RUN dotnet dotnet-format --check
 RUN dotnet build -c Release
 
 FROM build AS test
