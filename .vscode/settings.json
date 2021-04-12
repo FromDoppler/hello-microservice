@@ -1,7 +1,15 @@
 {
     "cSpell.words": [
         "ASPNETCORE",
-        "microservice"
+        "Jenkinsfile",
+        "Jenkisfile",
+        "dockerignore",
+        "eclint",
+        "editorconfig",
+        "gitattributes",
+        "microservice",
+        "symlink",
+        "wwwroot"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#e9856a",
