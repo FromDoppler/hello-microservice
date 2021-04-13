@@ -51,3 +51,5 @@ If you prefer to run these commands without docker, you can read [Dockerfile](./
 * [demo.http](./demo.http) to easily add manual tests for the exposed API with [VS Code REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client).
 
 * Exposing only HTTP (not HTTPS) because that is the responsibility of our reverse proxy.
+
+* Allow overriding project settings based on our Doppler conventions.
