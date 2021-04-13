@@ -18,6 +18,9 @@ cd "$(dirname "$0")"
 export MSYS_NO_PATHCONV=1
 export MSYS2_ARG_CONV_EXCL="*"
 
+echo Verify git commit conventions...
+sh ./gitlint.sh
+
 echo Verify Format...
 docker build --target verify-format .
 
