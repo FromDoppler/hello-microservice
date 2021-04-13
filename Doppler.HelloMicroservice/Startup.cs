@@ -30,6 +30,12 @@ namespace Doppler.HelloMicroservice
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Doppler.HelloMicroservice", Version = "v1" });
+
+                var baseUrl = Configuration.GetValue<string>("BaseURL");
+                if (!string.IsNullOrEmpty(baseUrl))
+                {
+                    c.AddServer(new OpenApiServer() { Url = baseUrl });
+                };
             });
         }
 
@@ -42,7 +48,7 @@ namespace Doppler.HelloMicroservice
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Doppler.HelloMicroservice v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "Doppler.HelloMicroservice v1"));
 
             app.UseStaticFiles();
 

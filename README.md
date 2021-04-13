@@ -53,3 +53,5 @@ If you prefer to run these commands without docker, you can read [Dockerfile](./
 * Exposing only HTTP (not HTTPS) because that is the responsibility of our reverse proxy.
 
 * Allow overriding project settings based on our Doppler conventions.
+
+* Expose Swagger (with support for segment prefix)
