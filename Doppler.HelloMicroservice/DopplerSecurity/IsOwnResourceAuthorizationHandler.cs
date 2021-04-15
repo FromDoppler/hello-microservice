@@ -43,8 +43,18 @@ namespace Doppler.HelloMicroservice.DopplerSecurity
                 return true;
             }
 
+            if (routeData.Values.TryGetValue("accountname", out var accountname) && accountname?.ToString() == GetTokenUniqueName(context.User))
+            {
+                // TODO: In case of using different public keys, for example Doppler and Relay,
+                // it is necessary to check token Issuer information, to validate right origin.
+                return true;
+            }
+
             return false;
         }
+
+        private static string GetTokenUniqueName(ClaimsPrincipal user) =>
+            user.FindFirst(c => c.Type == ClaimTypes.Name)?.Value;
 
         private static string GetTokenNameIdentifier(ClaimsPrincipal user) =>
             user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
