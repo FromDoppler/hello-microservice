@@ -24,3 +24,7 @@ Authorization: Bearer {{Token}}
 ###
 GET {{base}}/hello/superuser
 Authorization: Bearer {{Token}}
+
+###
+GET {{base}}/accounts/123/hello
+Authorization: Bearer {{Token}}

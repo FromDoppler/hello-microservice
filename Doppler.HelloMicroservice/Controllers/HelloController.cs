@@ -32,5 +32,12 @@ namespace Doppler.HelloMicroservice.Controllers
         {
             return "Hello! you have a valid SuperUser token!";
         }
+
+        [Authorize(Policies.OWN_RESOURCE_OR_SUPERUSER)]
+        [HttpGet("/accounts/{accountId:int:min(0)}/hello")]
+        public string GetForAccountById(int accountId)
+        {
+            return $"Hello! \"you\" that have access to the account with ID '{accountId}'";
+        }
     }
 }
