@@ -3,6 +3,7 @@
 .editorconfig
 .gitattributes
 .gitignore
+.gitlint
 .prettierignore
 .vscode
 .vs
