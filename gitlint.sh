@@ -18,20 +18,11 @@ cd "$(dirname "$0")"
 export MSYS_NO_PATHCONV=1
 export MSYS2_ARG_CONV_EXCL="*"
 
-echo Verify git commit conventions...
-sh ./gitlint.sh
+# See more information in https://jorisroovers.com/gitlint
 
-echo Verify Format...
-docker build --target verify-format .
-
-echo Verify .sh files...
-docker build --target verify-sh .
-
-echo Restore...
-docker build --target restore .
-
-echo Build...
-docker build --target build .
-
-echo Test...
-docker build --target test .
+docker run --ulimit nofile=1024 \
+  -v "$(pwd)/.git":/.git \
+  -v "$(pwd)/.gitlint":/.gitlint \
+  jorisroovers/gitlint \
+  --target . \
+  --commits origin/main..HEAD
