@@ -81,6 +81,7 @@ namespace Doppler.HelloMicroservice
 
         [Theory]
         [InlineData("/hello/valid-token", HttpStatusCode.Unauthorized)]
+        [InlineData("/hello/superuser", HttpStatusCode.Unauthorized)]
         public async Task GET_authenticated_endpoints_should_require_token(string url, HttpStatusCode expectedStatusCode)
         {
             // Arrange
@@ -104,7 +105,15 @@ namespace Doppler.HelloMicroservice
         [InlineData("/hello/valid-token", TOKEN_SUPERUSER_EXPIRE_20010908, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token expired at")]
         [InlineData("/hello/valid-token", TOKEN_ACCOUNT_123_TEST1_AT_TEST_DOT_COM_EXPIRE_20961002, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token has no expiration\"")]
         [InlineData("/hello/valid-token", TOKEN_ACCOUNT_123_TEST1_AT_TEST_DOT_COM_EXPIRE_20010908, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token expired at")]
-        public async Task GET_helloValidToken_should_require_a_valid_token(string url, string token, HttpStatusCode expectedStatusCode, string error, string extraErrorInfo)
+        [InlineData("/hello/superuser", TOKEN_EMPTY, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token has no expiration\"")]
+        [InlineData("/hello/superuser", TOKEN_EXPIRE_20961002, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token has no expiration\"")]
+        [InlineData("/hello/superuser", TOKEN_EXPIRE_20010908, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token expired at")]
+        [InlineData("/hello/superuser", TOKEN_BROKEN, HttpStatusCode.Unauthorized, "invalid_token", "")]
+        [InlineData("/hello/superuser", TOKEN_SUPERUSER_EXPIRE_20961002, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token has no expiration\"")]
+        [InlineData("/hello/superuser", TOKEN_SUPERUSER_EXPIRE_20010908, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token expired at")]
+        [InlineData("/hello/superuser", TOKEN_ACCOUNT_123_TEST1_AT_TEST_DOT_COM_EXPIRE_20961002, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token has no expiration\"")]
+        [InlineData("/hello/superuser", TOKEN_ACCOUNT_123_TEST1_AT_TEST_DOT_COM_EXPIRE_20010908, HttpStatusCode.Unauthorized, "invalid_token", "error_description=\"The token expired at")]
+        public async Task GET_authenticated_endpoints_should_require_a_valid_token(string url, string token, HttpStatusCode expectedStatusCode, string error, string extraErrorInfo)
         {
             // Arrange
             var client = _factory.CreateClient(new WebApplicationFactoryClientOptions());
@@ -131,6 +140,47 @@ namespace Doppler.HelloMicroservice
         [InlineData("/hello/valid-token", TOKEN_SUPERUSER_FALSE_EXPIRE_20330518, HttpStatusCode.OK)]
         [InlineData("/hello/valid-token", TOKEN_ACCOUNT_123_TEST1_AT_TEST_DOT_COM_EXPIRE_20330518, HttpStatusCode.OK)]
         public async Task GET_helloValidToken_should_accept_valid_token(string url, string token, HttpStatusCode expectedStatusCode)
+        {
+            // Arrange
+            var client = _factory.CreateClient(new WebApplicationFactoryClientOptions());
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Headers = { { "Authorization", $"Bearer {token}" } }
+            };
+
+            // Act
+            var response = await client.SendAsync(request);
+            _output.WriteLine(response.GetHeadersAsString());
+
+            // Assert
+            Assert.Equal(expectedStatusCode, response.StatusCode);
+        }
+
+        [InlineData("/hello/superuser", TOKEN_EXPIRE_20330518, HttpStatusCode.Forbidden)]
+        [InlineData("/hello/superuser", TOKEN_SUPERUSER_FALSE_EXPIRE_20330518, HttpStatusCode.Forbidden)]
+        [InlineData("/hello/superuser", TOKEN_ACCOUNT_123_TEST1_AT_TEST_DOT_COM_EXPIRE_20330518, HttpStatusCode.Forbidden)]
+        public async Task GET_helloSuperUser_should_require_a_valid_token_with_isSU_flag(string url, string token, HttpStatusCode expectedStatusCode)
+        {
+            // Arrange
+            var client = _factory.CreateClient(new WebApplicationFactoryClientOptions());
+
+            var request = new HttpRequestMessage(HttpMethod.Get, url)
+            {
+                Headers = { { "Authorization", $"Bearer {token}" } }
+            };
+
+            // Act
+            var response = await client.SendAsync(request);
+            _output.WriteLine(response.GetHeadersAsString());
+
+            // Assert
+            Assert.Equal(expectedStatusCode, response.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("/hello/superuser", TOKEN_SUPERUSER_EXPIRE_20330518, HttpStatusCode.OK)]
+        public async Task GET_helloSuperUser_should_accept_valid_token_with_isSU_flag(string url, string token, HttpStatusCode expectedStatusCode)
         {
             // Arrange
             var client = _factory.CreateClient(new WebApplicationFactoryClientOptions());

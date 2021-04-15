@@ -20,3 +20,7 @@ GET {{base}}/hello/anonymous
 ###
 GET {{base}}/hello/valid-token
 Authorization: Bearer {{Token}}
+
+###
+GET {{base}}/hello/superuser
+Authorization: Bearer {{Token}}

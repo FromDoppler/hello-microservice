@@ -10,6 +10,8 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddDopplerSecurity(this IServiceCollection services)
         {
+            services.AddSingleton<IAuthorizationHandler, IsSuperUserAuthorizationHandler>();
+
             services.ConfigureOptions<ConfigureDopplerSecurityOptions>();
 
             services.AddOptions<AuthorizationOptions>()
@@ -20,7 +22,22 @@ namespace Microsoft.Extensions.DependencyInjection
                         .RequireAuthenticatedUser()
                         .Build();
 
+                    var onlySuperUserPolicy = new AuthorizationPolicyBuilder()
+                        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                        .AddRequirements(new DopplerAuthorizationRequirement()
+                        {
+                            AllowSuperUser = true
+                        })
+                        .RequireAuthenticatedUser()
+                        .Build();
+
+                    // TODO: I would like to use onlySuperUserPolicy as the default policy, but I
+                    // cannot override a more restrictive policy with a less restrictive one. So,
+                    // for the moment, we have to be carefull and chooses the right one for each
+                    // controller.
                     o.DefaultPolicy = simpleAuthenticationPolicy;
+
+                    o.AddPolicy(Policies.ONLY_SUPERUSER, onlySuperUserPolicy);
                 });
 
             services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
