@@ -54,4 +54,6 @@ If you prefer to run these commands without docker, you can read [Dockerfile](./
 
 - Allow overriding project settings based on our Doppler conventions.
 
-- Expose Swagger (with support for segment prefix)
+- Expose Swagger (with support for segment prefix).
+
+- Including an example of a self-hosting integration test.
