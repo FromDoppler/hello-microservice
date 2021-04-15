@@ -16,3 +16,7 @@ GET {{base}}/version.txt
 
 ###
 GET {{base}}/hello/anonymous
+
+###
+GET {{base}}/hello/valid-token
+Authorization: Bearer {{Token}}
