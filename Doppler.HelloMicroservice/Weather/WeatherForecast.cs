@@ -1,6 +1,6 @@
 using System;
 
-namespace Doppler.HelloMicroservice
+namespace Doppler.HelloMicroservice.Weather
 {
     public class WeatherForecast
     {
