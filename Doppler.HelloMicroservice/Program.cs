@@ -40,6 +40,12 @@ namespace Doppler.HelloMicroservice
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                // Validate composition root declaration in all environments
+                .UseDefaultServiceProvider((context, options) =>
+                {
+                    options.ValidateScopes = true;
+                    options.ValidateOnBuild = true;
                 });
     }
 }

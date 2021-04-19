@@ -27,6 +27,8 @@ namespace Doppler.HelloMicroservice
         {
             services.AddDopplerSecurity();
             services.AddControllers();
+            services.AddSingleton<Weather.WeatherForecastService>();
+            services.AddSingleton<Weather.DataService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Doppler.HelloMicroservice", Version = "v1" });
