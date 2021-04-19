@@ -20,7 +20,6 @@ namespace Doppler.HelloMicroservice.Logging
                 .Enrich.WithProperty("Application", hostEnvironment.ApplicationName)
                 .Enrich.WithProperty("Environment", hostEnvironment.EnvironmentName)
                 .Enrich.WithProperty("Platform", Environment.OSVersion.Platform)
-                .Enrich.WithProperty("Host", Environment.MachineName)
                 .Enrich.FromLogContext();
 
             if (!hostEnvironment.IsDevelopment())
