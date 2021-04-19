@@ -28,17 +28,6 @@ namespace Doppler.HelloMicroservice.Logging
             config.ApplicationName ??= hostingEnvironment.ApplicationName;
             config.Transport.EndpointHostname ??= DefaultEndpointHostname;
 
-            // Define custom tags for sent to Loggly
-            config.TagConfig.Tags.AddRange(new ITag[]
-            {
-                new ApplicationNameTag {Formatter = "Application {0}"},
-                new HostnameTag { Formatter = "Host {0}" },
-                new SimpleTag { Value = $"Environment {hostingEnvironment.EnvironmentName}" },
-                new SimpleTag { Value = $"Runtime {Environment.Version}" },
-                new SimpleTag { Value = $"Platform {Environment.OSVersion.Platform}" },
-                new SimpleTag { Value = $"OSVersion {Environment.OSVersion}" },
-            });
-
             return configuration;
         }
     }
