@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Doppler.HelloMicroservice.Logging;
+using Serilog;
 
 namespace Doppler.HelloMicroservice
 {
@@ -18,6 +20,10 @@ namespace Doppler.HelloMicroservice
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog((hostContext, loggerConfiguration) =>
+                {
+                    loggerConfiguration.SetupSeriLog(hostContext.Configuration, hostContext.HostingEnvironment);
+                })
                 .ConfigureAppConfiguration((hostContext, configurationBuilder) =>
                 {
                     // It is if you want to override the configuration in your
