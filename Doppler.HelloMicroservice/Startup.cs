@@ -31,6 +31,26 @@ namespace Doppler.HelloMicroservice
             services.AddSingleton<Weather.DataService>();
             services.AddSwaggerGen(c =>
             {
+                c.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "Please enter the token into field as 'Bearer {token}'",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer"
+                    });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference { Id = "Bearer", Type = ReferenceType.SecurityScheme },
+                            },
+                            Array.Empty<string>()
+                        }
+                    });
+
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Doppler.HelloMicroservice", Version = "v1" });
 
                 var baseUrl = Configuration.GetValue<string>("BaseURL");
