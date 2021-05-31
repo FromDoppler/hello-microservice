@@ -175,6 +175,7 @@ namespace Doppler.HelloMicroservice
             Assert.Equal(expectedStatusCode, response.StatusCode);
         }
 
+        [Theory]
         [InlineData("/hello/superuser", TOKEN_EXPIRE_20330518, HttpStatusCode.Forbidden)]
         [InlineData("/hello/superuser", TOKEN_SUPERUSER_FALSE_EXPIRE_20330518, HttpStatusCode.Forbidden)]
         [InlineData("/hello/superuser", TOKEN_ACCOUNT_123_TEST1_AT_TEST_DOT_COM_EXPIRE_20330518, HttpStatusCode.Forbidden)]
@@ -216,6 +217,7 @@ namespace Doppler.HelloMicroservice
             Assert.Equal(expectedStatusCode, response.StatusCode);
         }
 
+        [Theory]
         [InlineData("/accounts/123/hello", TOKEN_EXPIRE_20330518, HttpStatusCode.Forbidden)]
         [InlineData("/accounts/123/hello", TOKEN_SUPERUSER_FALSE_EXPIRE_20330518, HttpStatusCode.Forbidden)]
         [InlineData("/accounts/456/hello", TOKEN_ACCOUNT_123_TEST1_AT_TEST_DOT_COM_EXPIRE_20330518, HttpStatusCode.Forbidden)]
