@@ -57,3 +57,67 @@ If you prefer to run these commands without docker, you can read [Dockerfile](./
 - Expose Swagger (with support for segment prefix).
 
 - Including an example of a self-hosting integration test.
+
+## How to use this project
+
+### Prepare the files
+
+By the moment it is only an example that could be used to create new APIs or even services.
+
+A simple way of doing that is copy all the files and then:
+
+- Delete all `bin` and `obj` folders
+
+- Rename all the files and folder names from `Doppler.HelloMicroservice` to the desired names.
+
+  For example `Doppler.HelloMicroservice.Test/Doppler.HelloMicroservice.Test.csproj` to `Doppler.SuperAPI.Test/Doppler.SuperAPI.Test.csproj`
+
+- Case sensitive _search and replace_ all occurrences of `Doppler.HelloMicroservice` to the desired name.
+
+- Case sensitive _search and replace_ all occurrences of `hello-microservice` to the desired name.
+
+- Replace the IDs in the .sln file.
+
+  We have `{FC79D827-86F3-4F93-8064-C4927957A1D2}` for the main project, `{646F92A1-8B19-43E0-BED1-8A56B6FB9352}` for the test project, `{9BE75F53-F47E-4B35-9560-AA039EBC5B1C}` for the solution files and `{A6DDDBE4-738F-4679-809B-D7786BD5E7E5}` for the solution itself. It is possible generate new IDs using any tool, for example [Online GUID / UUID Generator](https://www.guidgenerator.com/)
+
+- Ensure that the file `.doppler-ci` is a _symbolic link_ to `Jenkinsfile`
+
+  - In Linux or Mac: `ln -s Jenkinsfile .doppler-ci`
+  - In Windows (with git bash): `export MSYS=winsymlinks:nativestrict; ln -s Jenkinsfile .doppler-ci`
+
+### Push to GitHub
+
+We are using the GitHub organizations [FromDoppler](https://github.com/FromDoppler) (for public code) and [MakingSense](https://github.com/MakingSense) (for private code).
+
+Create a new empty project there, and create a PR to push the updated files. It should start a CI process in our Jenkins server.
+
+### Configure GitHub branch protection rules
+
+In [GitHub Branches Settings](https://github.com/FromDoppler/hello-microservice/settings/branches) add a new protection rule for the `main` branch.
+
+![github-settings-branches](./docs/github-settings-branches.png)
+
+With the following configuration:
+
+- **Branch name pattern**: `main`
+- **Require status checks to pass before merging**: _checked_
+- **Require branches to be up to date before merging**: _checked_
+- **Status checks that are required**: `continuous-integration/jenkins/pr-head`
+- **Include administrators**: _checked_
+
+![github-main-protection-rules](./docs/github-main-protection-rules.png)
+
+### Configure Docker Hub Webhooks
+
+At this point, the CI process already generated a Docker Hub repository and we should configure the WebHooks to enable the auto-redeploy in our environments.
+
+Open the Webhooks configuration page of this new repository (this is the URL for hello-microservice repository: <https://hub.docker.com/repository/docker/dopplerdock/hello-microservice/webhooks>) and create the webhooks for production and test environments:
+
+- **cd-helper-production** `https://apis.fromdoppler.com/cd-helper/hooks/{{REEMPLACE-THE-SECRET-HERE}}/`
+- **cd-helper-test** `https://apisqa.fromdoppler.net/cd-helper/hooks/{{REEMPLACE-THE-SECRET-HERE}}/`
+
+![dockerhub-webhooks](./docs/dockerhub-webhooks.png)
+
+### Add the stack to Doppler Swarm repository
+
+We should add the stack to [Doppler Swarm repository](https://github.com/MakingSense/doppler-swarm), it is possible using `hello-stack` as reference. Using _search in files_ is recommended to find all the places to update.
