@@ -83,7 +83,7 @@ A simple way of doing that is copy all the files and then:
 - Ensure that the file `.doppler-ci` is a _symbolic link_ to `Jenkinsfile`
 
   - In Linux or Mac: `ln -s Jenkinsfile .doppler-ci`
-  - In Windows (with git bash): `export MSYS=winsymlinks:nativestrict; ln -s Jenkinsfile .doppler-ci`
+  - In Windows (with git bash as administrator): `export MSYS=winsymlinks:nativestrict; ln -s Jenkinsfile .doppler-ci`
 
 ### Push to GitHub
 
