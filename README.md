@@ -38,7 +38,7 @@ If you prefer to run these commands without docker, you can read [Dockerfile](./
 
 - Editor Config validation using `dotnet-format` and `eclint`.
 
-- Launch and debug settings for VS Code ([.vscode](./.vscode)) and Visual Studio ([launchSettings.json](./Doppler.HelloMicroserver/../Doppler.HelloMicroservice/Properties/launchSettings.json)).
+- Launch and debug settings for VS Code ([.vscode](./.vscode)) and Visual Studio ([launchSettings.json](./Doppler.HelloMicroservice/../Doppler.HelloMicroservice/Properties/launchSettings.json)).
 
 - Custom color for VS Code (using [Peacock](https://marketplace.visualstudio.com/items?itemName=johnpapa.vscode-peacock&wt.mc_id=vscodepeacock-github-jopapa), see [settings.json](./.vscode/settings.json)).
 
@@ -74,13 +74,19 @@ A simple way of doing that is copy all the files and then:
 
 - Case sensitive _search and replace_ all occurrences of `Doppler.HelloMicroservice` to the desired name.
 
+  **IMPORTANT:** Some files are not included in the VS Solution, you should search for `Doppler.HelloMicroservice` in **ALL** the files.
+
 - Case sensitive _search and replace_ all occurrences of `hello-microservice` to the desired name.
+
+  **IMPORTANT:** Some files are not included in the VS Solution, you should search for `hello-microservice` in **ALL** the files.
 
 - Replace the IDs in the .sln file.
 
   We have `{FC79D827-86F3-4F93-8064-C4927957A1D2}` for the main project, `{646F92A1-8B19-43E0-BED1-8A56B6FB9352}` for the test project, `{9BE75F53-F47E-4B35-9560-AA039EBC5B1C}` for the solution files and `{A6DDDBE4-738F-4679-809B-D7786BD5E7E5}` for the solution itself. It is possible generate new IDs using any tool, for example [Online GUID / UUID Generator](https://www.guidgenerator.com/)
 
 - Ensure that the file `.doppler-ci` is a _symbolic link_ to `Jenkinsfile`
+
+  **IMPORTANT:** If you do not know what a symlink is, ask.
 
   - In Linux or Mac: `ln -s Jenkinsfile .doppler-ci`
   - In Windows (with git bash as administrator): `export MSYS=winsymlinks:nativestrict; ln -s Jenkinsfile .doppler-ci`
@@ -111,12 +117,16 @@ With the following configuration:
 
 At this point, the CI process already generated a Docker Hub repository and we should configure the WebHooks to enable the auto-redeploy in our environments.
 
+**IMPORTANT:** You need the credentials of `dopplerdock` Docker Hub account. Ask for them.
+
 Open the Webhooks configuration page of this new repository (this is the URL for hello-microservice repository: <https://hub.docker.com/repository/docker/dopplerdock/hello-microservice/webhooks>) and create the webhooks for production and test environments:
 
 - **cd-helper-production** `https://apis.fromdoppler.com/cd-helper/hooks/{{REEMPLACE-THE-SECRET-HERE}}/`
 - **cd-helper-test** `https://apisqa.fromdoppler.net/cd-helper/hooks/{{REEMPLACE-THE-SECRET-HERE}}/`
 
 ![dockerhub-webhooks](./docs/dockerhub-webhooks.png)
+
+**IMPORTANT:** You can see the secrets in other Docker Hub repositories, for example in [_CD-Helper_'s one](https://hub.docker.com/repository/docker/dopplerdock/doppler-cd-helper/webhooks).
 
 ### Add the stack to Doppler Swarm repository
 
