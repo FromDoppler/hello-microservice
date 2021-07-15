@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Doppler.HelloMicroservice.Weather
 {
-    public class WeatherForecastService
+    public class WeatherForecastService : IWeatherForecastService
     {
         private readonly DataService _dataService;
         public WeatherForecastService(DataService dataService)
