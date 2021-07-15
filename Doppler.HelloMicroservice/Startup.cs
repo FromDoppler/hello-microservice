@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Hellang.Middleware.ProblemDetails;
 
 namespace Doppler.HelloMicroservice
 {
@@ -25,6 +26,7 @@ namespace Doppler.HelloMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddProblemDetails();
             services.AddDopplerSecurity();
             services.AddControllers();
             services.AddSingleton<Weather.IWeatherForecastService, Weather.WeatherForecastService>();
@@ -64,10 +66,7 @@ namespace Doppler.HelloMicroservice
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseProblemDetails();
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("v1/swagger.json", "Doppler.HelloMicroservice v1"));
