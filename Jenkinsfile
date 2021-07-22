@@ -47,7 +47,7 @@ pipeline {
                         }
                     }
                 }
-                stage('Publish pre-release images from master') {
+                stage('Publish pre-release images from main') {
                     when {
                         branch 'main'
                     }
