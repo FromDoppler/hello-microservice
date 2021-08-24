@@ -44,7 +44,7 @@ namespace Doppler.HelloMicroservice
             //Act
             var response = await client.GetAsync(url);
 
-            // Assert
+            //Assert
             Assert.Equal(expectedStatusCode, response.StatusCode);
         }
 
