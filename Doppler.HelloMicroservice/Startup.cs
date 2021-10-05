@@ -29,6 +29,7 @@ namespace Doppler.HelloMicroservice
             services.AddProblemDetails();
             services.AddDopplerSecurity();
             services.AddControllers();
+            services.AddCors();
             services.AddSingleton<Weather.IWeatherForecastService, Weather.WeatherForecastService>();
             services.AddSingleton<Weather.DataService>();
             services.AddSwaggerGen(c =>
@@ -74,6 +75,12 @@ namespace Doppler.HelloMicroservice
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors(policy => policy
+                .SetIsOriginAllowed(isOriginAllowed: _ => true)
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
 
             app.UseAuthorization();
 
