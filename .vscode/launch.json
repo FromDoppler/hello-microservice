@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Doppler.HelloMicroservice/bin/Debug/net5.0/Doppler.HelloMicroservice.dll",
+            "program": "${workspaceFolder}/Doppler.HelloMicroservice/bin/Debug/net6.0/Doppler.HelloMicroservice.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Doppler.HelloMicroservice",
             "stopAtEntry": false,
