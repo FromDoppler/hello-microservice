@@ -1,0 +1,23 @@
+{
+  "extends": ["config:base"],
+  "separateMinorPatch": true,
+  "semanticCommits": "enabled",
+  "commitMessagePrefix": "fix(deps): ",
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["lint", "prettier"],
+      "automerge": true
+    },
+    {
+      "packagePatterns": [
+        "Microsoft\\.VisualStudio\\.Azure\\.Containers\\.Tools\\.Targets",
+        "Microsoft\\.AspNetCore\\.Mvc\\.Testing",
+        "Moq",
+        "Microsoft\\.NET\\.Test\\.Sdk",
+        "xunit",
+        "coverlet\\.collector"
+      ],
+      "automerge": true
+    }
+  ]
+}
