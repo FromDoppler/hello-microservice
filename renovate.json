@@ -1,12 +1,24 @@
 {
-  "extends": ["config:base"],
-  "separateMinorPatch": true,
-  "semanticCommits": "enabled",
-  "commitMessagePrefix": "fix(deps): ",
+  "extends": [
+    "config:base",
+    ":semanticCommits",
+    ":combinePatchMinorReleases",
+    ":enableVulnerabilityAlerts",
+    ":automergeLinters",
+    ":automergeTesters",
+    ":automergeTypes",
+    ":prConcurrentLimitNone",
+    ":prConcurrentLimit20",
+    "group:dotNetCore"
+  ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["lint", "prettier"],
-      "automerge": true
+      "packageRules": [
+        {
+          "matchDepTypes": ["devDependencies"],
+          "automerge": true
+        }
+      ]
     },
     {
       "packagePatterns": [

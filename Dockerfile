@@ -5,12 +5,12 @@ RUN yarn
 COPY . .
 RUN yarn verify-format
 
-FROM koalaman/shellcheck-alpine as verify-sh
+FROM koalaman/shellcheck-alpine:v0.8.0 as verify-sh
 WORKDIR /src
 COPY ./*.sh ./
 RUN shellcheck -e SC1091,SC1090 ./*.sh
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0.202-bullseye-slim AS restore
+FROM mcr.microsoft.com/dotnet/sdk:6.0.301-bullseye-slim AS restore
 WORKDIR /src
 COPY ./*.sln ./
 COPY */*.csproj ./
@@ -29,7 +29,7 @@ RUN dotnet test
 FROM build AS publish
 RUN dotnet publish "./Doppler.HelloMicroservice/Doppler.HelloMicroservice.csproj" -c Release -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0.4-bullseye-slim AS final
+FROM mcr.microsoft.com/dotnet/aspnet:6.0.6-bullseye-slim AS final
 # We need these changes in openssl.cnf to access to our SQL Server instances in QA and INT environments
 # See more information in https://stackoverflow.com/questions/56473656/cant-connect-to-sql-server-named-instance-from-asp-net-core-running-in-docker/59391426#59391426
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
