@@ -75,7 +75,7 @@ namespace Doppler.HelloMicroservice
             Assert.Equal("application/problem+json; charset=utf-8", response.Content?.Headers?.ContentType?.ToString());
             Assert.Contains($"\"detail\":\"{exceptionMessage}\"", responseContent);
             Assert.Contains("\"title\":\"Internal Server Error\"", responseContent);
-            Assert.Contains("\"type\":\"https://httpstatuses.com/500\"", responseContent);
+            Assert.Contains("\"type\":\"https://httpstatuses.io/500\"", responseContent);
             Assert.Contains("\"status\":500", responseContent);
             Assert.Contains("\"type\":\"System.Exception\"", responseContent);
             Assert.Contains($"\"raw\":\"System.Exception: {exceptionMessage}", responseContent);
