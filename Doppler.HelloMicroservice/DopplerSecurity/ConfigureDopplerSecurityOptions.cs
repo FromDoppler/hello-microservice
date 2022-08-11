@@ -1,13 +1,13 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Security.Cryptography;
 
 namespace Doppler.HelloMicroservice.DopplerSecurity
 {

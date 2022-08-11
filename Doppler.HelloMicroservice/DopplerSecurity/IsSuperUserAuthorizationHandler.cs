@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace Doppler.HelloMicroservice.DopplerSecurity
 {
@@ -29,13 +29,13 @@ namespace Doppler.HelloMicroservice.DopplerSecurity
 
         private bool IsSuperUser(AuthorizationHandlerContext context)
         {
-            if (!context.User.HasClaim(c => c.Type.Equals(DopplerSecurityDefaults.SuperuserJwtKey)))
+            if (!context.User.HasClaim(c => c.Type.Equals(DopplerSecurityDefaults.SuperuserJwtKey, StringComparison.Ordinal)))
             {
                 _logger.LogDebug("The token hasn't super user permissions.");
                 return false;
             }
 
-            var isSuperUser = bool.Parse(context.User.FindFirst(c => c.Type.Equals(DopplerSecurityDefaults.SuperuserJwtKey)).Value);
+            var isSuperUser = bool.Parse(context.User.FindFirst(c => c.Type.Equals(DopplerSecurityDefaults.SuperuserJwtKey, StringComparison.Ordinal)).Value);
             if (isSuperUser)
             {
                 return true;
