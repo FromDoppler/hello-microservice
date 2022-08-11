@@ -40,12 +40,12 @@ namespace Doppler.HelloMicroservice.DopplerSecurity
         public void Configure(DopplerSecurityOptions options)
         {
             var path = _configuration.GetValue(
-                DopplerSecurityDefaults.PUBLIC_KEYS_FOLDER_CONFIG_KEY,
-                DopplerSecurityDefaults.PUBLIC_KEYS_FOLDER_DEFAULT_CONFIG_VALUE);
+                DopplerSecurityDefaults.PublicKeysFolderConfigKey,
+                DopplerSecurityDefaults.PublicKeysFolderDefaultConfigValue);
 
             var filenameRegex = new Regex(_configuration.GetValue(
-                DopplerSecurityDefaults.PUBLIC_KEYS_FILENAME_CONFIG_KEY,
-                DopplerSecurityDefaults.PUBLIC_KEYS_FILENAME_REGEX_DEFAULT_CONFIG_VALUE));
+                DopplerSecurityDefaults.PublicKeysFilenameConfigKey,
+                DopplerSecurityDefaults.PublicKeysFilenameRegexDefaultConfigValue));
 
             var files = _fileProvider.GetDirectoryContents(path)
                 .Where(x => !x.IsDirectory && filenameRegex.IsMatch(x.Name));

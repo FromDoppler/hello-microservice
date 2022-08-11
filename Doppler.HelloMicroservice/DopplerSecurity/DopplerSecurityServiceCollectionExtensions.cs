@@ -48,8 +48,8 @@ namespace Microsoft.Extensions.DependencyInjection
                     // controller.
                     o.DefaultPolicy = simpleAuthenticationPolicy;
 
-                    o.AddPolicy(Policies.ONLY_SUPERUSER, onlySuperUserPolicy);
-                    o.AddPolicy(Policies.OWN_RESOURCE_OR_SUPERUSER, ownResourceOrSuperUserPolicy);
+                    o.AddPolicy(Policies.OnlySuperuser, onlySuperUserPolicy);
+                    o.AddPolicy(Policies.OwnResourceOrSuperuser, ownResourceOrSuperUserPolicy);
                 });
 
             services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
