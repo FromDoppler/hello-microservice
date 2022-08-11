@@ -9,9 +9,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Doppler.HelloMicroservice.DopplerSecurity
 {
-    public class IsOwnResourceAuthorizationHandler : AuthorizationHandler<DopplerAuthorizationRequirement>
+    public partial class IsOwnResourceAuthorizationHandler : AuthorizationHandler<DopplerAuthorizationRequirement>
     {
         private readonly ILogger<IsOwnResourceAuthorizationHandler> _logger;
+
+        [LoggerMessage(0, LogLevel.Debug, "Is not possible access to Resource information. Type of context.Resource: {ResourceType}")]
+        partial void LogErrorResourceInformationNotAccessible(string resourceType);
 
         public IsOwnResourceAuthorizationHandler(ILogger<IsOwnResourceAuthorizationHandler> logger)
         {
@@ -32,7 +35,7 @@ namespace Doppler.HelloMicroservice.DopplerSecurity
         {
             if (!TryGetRouteData(context, out var routeData))
             {
-                _logger.LogError("Is not possible access to Resource information. Type of context.Resource: {ResourceType}", context.Resource?.GetType().Name ?? "null");
+                LogErrorResourceInformationNotAccessible(context.Resource?.GetType().Name ?? "null");
                 return false;
             }
 

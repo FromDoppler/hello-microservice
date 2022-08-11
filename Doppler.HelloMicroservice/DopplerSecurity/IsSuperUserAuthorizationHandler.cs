@@ -8,9 +8,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Doppler.HelloMicroservice.DopplerSecurity
 {
-    public class IsSuperUserAuthorizationHandler : AuthorizationHandler<DopplerAuthorizationRequirement>
+    public partial class IsSuperUserAuthorizationHandler : AuthorizationHandler<DopplerAuthorizationRequirement>
     {
         private readonly ILogger<IsSuperUserAuthorizationHandler> _logger;
+
+        [LoggerMessage(0, LogLevel.Debug, "The token hasn't super user permissions.")]
+        partial void LogDebugTokenHasNotSuperuserPermissions();
+
+        [LoggerMessage(1, LogLevel.Debug, "The token super user permissions is false.")]
+        partial void LogDebugTokenSuperuserPermissionsIsFalse();
 
         public IsSuperUserAuthorizationHandler(ILogger<IsSuperUserAuthorizationHandler> logger)
         {
@@ -31,7 +37,7 @@ namespace Doppler.HelloMicroservice.DopplerSecurity
         {
             if (!context.User.HasClaim(c => c.Type.Equals(DopplerSecurityDefaults.SuperuserJwtKey, StringComparison.Ordinal)))
             {
-                _logger.LogDebug("The token hasn't super user permissions.");
+                LogDebugTokenHasNotSuperuserPermissions();
                 return false;
             }
 
@@ -41,7 +47,7 @@ namespace Doppler.HelloMicroservice.DopplerSecurity
                 return true;
             }
 
-            _logger.LogDebug("The token super user permissions is false.");
+            LogDebugTokenSuperuserPermissionsIsFalse();
             return false;
         }
     }
