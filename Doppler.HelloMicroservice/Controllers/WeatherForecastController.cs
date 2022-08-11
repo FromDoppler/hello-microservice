@@ -12,12 +12,10 @@ namespace Doppler.HelloMicroservice.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
         private readonly IWeatherForecastService _service;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecastService service)
+        public WeatherForecastController(IWeatherForecastService service)
         {
-            _logger = logger;
             _service = service;
         }
 
