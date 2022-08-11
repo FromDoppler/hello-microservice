@@ -50,8 +50,10 @@ namespace Doppler.HelloMicroservice
             // Arrange
             var exceptionMessage = "Test unexpected exception";
             var weatherForecastServiceMock = new Mock<Weather.IWeatherForecastService>();
+#pragma warning disable CA2201
             weatherForecastServiceMock.Setup(x => x.GetForecasts())
                 .Throws(new Exception(exceptionMessage));
+#pragma warning restore CA2201
 
             var client = _factory
                 .WithWebHostBuilder(c =>
