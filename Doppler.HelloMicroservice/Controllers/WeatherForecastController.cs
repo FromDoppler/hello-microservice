@@ -4,25 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Doppler.HelloMicroservice.Weather;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace Doppler.HelloMicroservice.Controllers
+namespace Doppler.HelloMicroservice.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class WeatherForecastController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    private readonly IWeatherForecastService _service;
+
+    public WeatherForecastController(IWeatherForecastService service)
     {
-        private readonly IWeatherForecastService _service;
+        _service = service;
+    }
 
-        public WeatherForecastController(IWeatherForecastService service)
-        {
-            _service = service;
-        }
-
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return _service.GetForecasts();
-        }
+    [HttpGet]
+    public IEnumerable<WeatherForecast> Get()
+    {
+        return _service.GetForecasts();
     }
 }
