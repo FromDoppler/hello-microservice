@@ -1,10 +1,9 @@
-namespace Doppler.HelloMicroservice.Weather
+namespace Doppler.HelloMicroservice.Weather;
+
+public class DataService
 {
-    public class DataService
+    public string[] GetData() => new[]
     {
-        public string[] GetData() => new[]
-        {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-    }
 }

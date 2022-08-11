@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 
-namespace Doppler.HelloMicroservice.Weather
+namespace Doppler.HelloMicroservice.Weather;
+
+public interface IWeatherForecastService
 {
-    public interface IWeatherForecastService
-    {
-        IEnumerable<WeatherForecast> GetForecasts();
-    }
+    IEnumerable<WeatherForecast> GetForecasts();
 }
