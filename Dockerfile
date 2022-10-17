@@ -15,7 +15,7 @@ WORKDIR /src
 COPY ./*.sln ./
 COPY */*.csproj ./
 # Take into account using the same name for the folder and the .csproj and only one folder level
-RUN for file in $(ls *.csproj); do mkdir -p ${file%.*}/ && mv $file ${file%.*}/; done
+RUN for file in *.csproj; do mkdir -p -- "${file%.*}/" && mv -- "$file" "${file%.*}/"; done
 RUN dotnet restore
 
 FROM restore AS build
