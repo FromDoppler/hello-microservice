@@ -6,6 +6,11 @@ pipeline {
                 sh 'sh ./gitlint.sh'
             }
         }
+        stage('Verify Dockerfile') {
+            steps {
+                sh 'sh ./dockerlint.sh'
+            }
+        }
         stage('Verify Format') {
             steps {
                 sh 'docker build --target verify-format .'
