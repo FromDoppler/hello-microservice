@@ -20,8 +20,8 @@ RUN dotnet restore
 
 FROM restore AS build
 COPY . .
-RUN dotnet format -v diagnostic --verify-no-changes
-RUN dotnet build -c Release
+RUN dotnet format -v diagnostic --verify-no-changes \
+    && dotnet build -c Release
 
 FROM build AS test
 RUN dotnet test
@@ -32,10 +32,10 @@ RUN dotnet publish "./Doppler.HelloMicroservice/Doppler.HelloMicroservice.csproj
 FROM mcr.microsoft.com/dotnet/aspnet:6.0.9-bullseye-slim AS final
 # We need these changes in openssl.cnf to access to our SQL Server instances in QA and INT environments
 # See more information in https://stackoverflow.com/questions/56473656/cant-connect-to-sql-server-named-instance-from-asp-net-core-running-in-docker/59391426#59391426
-RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
-RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /etc/ssl/openssl.cnf
-RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /usr/lib/ssl/openssl.cnf
-RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /usr/lib/ssl/openssl.cnf
+RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf \
+    && sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /etc/ssl/openssl.cnf \
+    && sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /usr/lib/ssl/openssl.cnf \
+    && sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /usr/lib/ssl/openssl.cnf
 WORKDIR /app
 EXPOSE 80
 COPY --from=publish /app/publish .
