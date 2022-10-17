@@ -42,3 +42,4 @@ COPY --from=publish /app/publish .
 ARG version=unknown
 RUN echo $version > /app/wwwroot/version.txt
 ENTRYPOINT ["dotnet", "Doppler.HelloMicroservice.dll"]
+LABEL name="hello-microservice" version="$version"
