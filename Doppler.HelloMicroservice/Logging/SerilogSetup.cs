@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -7,7 +8,7 @@ namespace Doppler.HelloMicroservice.Logging;
 
 public static class SerilogSetup
 {
-    public static LoggerConfiguration SetupSeriLog(
+    public static LoggerConfiguration SetupSerilog(
         this LoggerConfiguration loggerConfiguration,
         IConfiguration configuration,
         IHostEnvironment hostEnvironment)
@@ -15,7 +16,7 @@ public static class SerilogSetup
         configuration.ConfigureLoggly(hostEnvironment);
 
         loggerConfiguration
-            .WriteTo.Console()
+            .WriteTo.Console(formatProvider: CultureInfo.InvariantCulture)
             .Enrich.WithProperty("Application", hostEnvironment.ApplicationName)
             .Enrich.WithProperty("Environment", hostEnvironment.EnvironmentName)
             .Enrich.WithProperty("Platform", Environment.OSVersion.Platform)
@@ -25,7 +26,7 @@ public static class SerilogSetup
         if (!hostEnvironment.IsDevelopment())
         {
             loggerConfiguration
-                .WriteTo.Loggly();
+                .WriteTo.Loggly(formatProvider: CultureInfo.InvariantCulture);
         }
 
         loggerConfiguration.ReadFrom.Configuration(configuration);
