@@ -380,4 +380,3 @@ dotnet_analyzer_diagnostic.category-CodeQuality.severity = error
 dotnet_diagnostic.CA1707.severity = none
 # Disabled because of a bug in the analyzer (see https://github.com/xunit/xunit.analyzers/pull/150)
 dotnet_diagnostic.xUnit1033.severity = none
-
