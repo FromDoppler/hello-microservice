@@ -1,10 +1,10 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0.3-bullseye-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.4-bullseye-slim AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0.103-bullseye-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0.202-bullseye-slim AS build
 WORKDIR /src
 COPY ["Doppler.HelloMicroservice/Doppler.HelloMicroservice.csproj", "Doppler.HelloMicroservice/"]
 RUN dotnet restore "Doppler.HelloMicroservice/Doppler.HelloMicroservice.csproj"
