@@ -39,7 +39,7 @@ pipeline {
         stage('Publish in dopplerdock') {
             environment {
                 DOCKER_CREDENTIALS_ID = "dockerhub_dopplerdock"
-                DOCKER_IMAGE_NAME = "dopplerdock/hello-microservice${PACKAGE_SUFFIX}"
+                DOCKER_IMAGE_NAME = "dopplerdock/hello-microservice"
             }
             stages {
                 stage('Publish pre-release images from pull request') {
