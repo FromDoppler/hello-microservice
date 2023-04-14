@@ -8,7 +8,7 @@ For the moment, it is only a kind of example. In the future, it could be convert
 
 We base our CI/CD process on Jenkins, Docker Hub, and Docker Swarm.
 
-Jenkins generates the images based on [.doppler-ci](./.doppler-ci) (a symlink to [Jenkisfile](./Jenkinsfile)). We refer to these generated images in a Docker Swarm using an _auto-redeploy_ approach. The [Doppler Swarm repository](https://github.com/MakingSense/doppler-swarm) stores the configuration of our Docker Swarm.
+Jenkins generates the images based on [doppler-jenkins-ci.groovy](./doppler-jenkins-ci.groovy) (a symlink to [Jenkisfile](./Jenkinsfile)). We refer to these generated images in a Docker Swarm using an _auto-redeploy_ approach. The [Doppler Swarm repository](https://github.com/MakingSense/doppler-swarm) stores the configuration of our Docker Swarm.
 
 You can find a detailed description of our Git flow and the relation with Docker Hub in [Doppler-Forms repository](https://github.com/MakingSense/doppler-forms/blob/master/README.md#continuous-deployment-to-test-and-production-environments), but basically, it is the following:
 
@@ -22,7 +22,7 @@ You can find a detailed description of our Git flow and the relation with Docker
 
 ## Run validations in local environment
 
-The source of truth related to the build process is [.doppler-ci](./.doppler-ci) (a symlink to [Jenkisfile](./Jenkinsfile)). It basically runs docker build, so, you can reproduce jenkins' build process running `docker build .` or `sh ./verify-w-docker.sh`.
+The source of truth related to the build process is [doppler-jenkins-ci.groovy](./doppler-jenkins-ci.groovy) (a symlink to [Jenkisfile](./Jenkinsfile)). It basically runs docker build, so, you can reproduce jenkins' build process running `docker build .` or `sh ./verify-w-docker.sh`.
 
 If you prefer to run these commands without docker, you can read [Dockerfile](./Dockerfile) and follow the steps manually.
 
@@ -84,12 +84,12 @@ A simple way of doing that is copy all the files and then:
 
   We have `{FC79D827-86F3-4F93-8064-C4927957A1D2}` for the main project, `{646F92A1-8B19-43E0-BED1-8A56B6FB9352}` for the test project, `{9BE75F53-F47E-4B35-9560-AA039EBC5B1C}` for the solution files and `{A6DDDBE4-738F-4679-809B-D7786BD5E7E5}` for the solution itself. It is possible generate new IDs using any tool, for example [Online GUID / UUID Generator](https://www.guidgenerator.com/)
 
-- Ensure that the file `.doppler-ci` is a _symbolic link_ to `Jenkinsfile`
+- Ensure that the file `doppler-jenkins-ci.groovy` is a _symbolic link_ to `Jenkinsfile`
 
   **IMPORTANT:** If you do not know what a symlink is, ask.
 
-  - In Linux or Mac: `ln -s Jenkinsfile .doppler-ci`
-  - In Windows (with git bash as administrator): `export MSYS=winsymlinks:nativestrict; ln -s Jenkinsfile .doppler-ci`
+  - In Linux or Mac: `ln -s Jenkinsfile doppler-jenkins-ci.groovy`
+  - In Windows (with git bash as administrator): `export MSYS=winsymlinks:nativestrict; ln -s Jenkinsfile doppler-jenkins-ci.groovy`
 
 ### Push to GitHub
 
