@@ -4,6 +4,8 @@ A basic template for a Doppler microservice based on .NET with CI, CD, Code Form
 
 For the moment, it is only a kind of example. In the future, it could be converted into a _Yeoman_ or _dotnet new_ scaffolding template 🤷‍♂️.
 
+Test 4.
+
 ## Context
 
 We base our CI/CD process on Jenkins, Docker Hub, and Docker Swarm.
